@@ -28,6 +28,11 @@
         </header>
         <section>
             <article>
+                <div id="limparCarrinho">
+                    <button onclick="limparCarrinho()">Limpar Carrinho</button>
+                </div>
+            </article>
+            <article>
                 <div class="produto" id="prod_1">
                     <div>
                         <img class="miniatura" src="img/sommerville_es.jpeg" alt="Imagem do Produto">
@@ -40,7 +45,7 @@
                         <p>R$ <span class="valor">194,24</span></p>
                     </div>
                     <div class="quantidade">
-                        <input type="number" name="quantidade" min="1" max="5" size="2" value="0" onchange="escreveValorTotal()">
+                        <input type="number" name="quantidade" min="1" max="5" size="2" value="0">
                     </div>
                     <div class="presente">
                         <input type="checkbox" name="presente">

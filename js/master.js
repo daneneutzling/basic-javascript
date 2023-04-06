@@ -61,7 +61,7 @@ function calculaPrecoTotal() {
       if (presente == true) {
         totalPedido = totalPedido + 5;
         escreveValorTotal(totalPedido);
-        
+
       } else {
         totalPedido = totalPedido - 5;
         escreveValorTotal(totalPedido);
@@ -77,6 +77,20 @@ function escreveValorTotal(total) {
   let valorTotal = document.getElementById('valor-total');
   // Mando escrever o resultado no elemento
   valorTotal.innerHTML = 'R$' + total;
+}
+
+function limparCarrinho() {
+  let listaQuantidades = document.querySelectorAll('.quantidade input');
+
+  listaQuantidades.forEach(function(quantidade) {
+    let presente = document.querySelector('.presente input');
+    
+    presente.checked = false;
+    quantidade.value = 0;
+
+    escreveValorTotal(0);
+  });
+
 }
 
 // 'DOMContentLoaded' é um evento disparado quando o HTML é totalmente carregado
