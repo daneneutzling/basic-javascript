@@ -50,6 +50,26 @@ function calculaPrecoTotal() {
       escreveValorTotal(totalPedido);
     });
   });
+
+  let paraPresente = document.querySelectorAll('.presente input');
+
+  paraPresente.forEach(function(presente) {
+    presente.addEventListener('change', function(event) {
+      let idProduto = event.target.closest('.produto').id;
+      let presente = event.target.checked; 
+
+      if (presente == true) {
+        totalPedido = totalPedido + 5;
+        escreveValorTotal(totalPedido);
+        
+      } else {
+        totalPedido = totalPedido - 5;
+        escreveValorTotal(totalPedido);
+      }
+
+    })
+  })
+
 }
 
 function escreveValorTotal(total) {
@@ -59,8 +79,9 @@ function escreveValorTotal(total) {
   valorTotal.innerHTML = 'R$' + total;
 }
 
+// 'DOMContentLoaded' é um evento disparado quando o HTML é totalmente carregado
 document.addEventListener("DOMContentLoaded", function (event) {
-  console.log("DOM carregado");
+  // Chamo a função assim que o HTML for carregado
   calculaPrecoTotal();
 });
 
