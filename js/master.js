@@ -17,57 +17,51 @@ function floatToText(float) {
 }
 
 let totalPedido = 0;
-/*
-function calculaPrecoTotal(precoUnitario) {
-  console.log(precoUnitario)
-  totalItem = 0;
 
-  precoUnitario  = textToFloat(precoUnitario); 
-  let id         = document.querySelector('.produto').id;
-  let quantidade = document.querySelector("#" + id + " .quantidade input").value;
 
-  console.log(id)
-  quantidade = textToFloat(quantidade)
-  console.log(quantidade)
-
-  totalItem = precoUnitario * quantidade;
-
-  totalPedido = totalItem;
-    
-  console.log("Tot. Item: " + totalItem);
-  console.log("Total: " + totalPedido);
-
-}
-*/
-
-function calculaPrecoTotal(id) {
-console.log(id)
-  let produto = document.getElementsByClassName("produto");
+function calculaPrecoTotal() {
   let totalItem;
   let totalPedido = 0;
 
-  for (let index = 1; index <= produto.length; index++) {
+  // Cria uma lista com todos elementos que tem a classe 'quantidade'
+  let listaQuantidades = document.querySelectorAll('.quantidade input');
+
+  // Percorren cada elemento da lista, executando uma função que recebe parametro quantidade (referencia ao próprio elemento)
+  listaQuantidades.forEach(function(quantidade) {
     totalItem = 0;
 
-    let preco = textToFloat(document.querySelector("#" + id + " .valor").textContent);
-    let quantidade = document.querySelector("#" + id + " .quantidade input").value;
+    // 'Escuta' quando o evento de 'change' acontece no elemento de 'quantidade'
+    quantidade.addEventListener('change', function(event) {
 
-    totalItem = preco * quantidade;
-    totalPedido = totalPedido + totalItem;
-    
-    console.log("Tot. Item: " + totalItem);
-    console.log("Total: " + totalPedido);
+      // A partir do elemento que disparou a evento, procura-se o elemento pai, onde tem a classe 'produto' e é pego o ID
+      let idProduto = event.target.closest('.produto').id;
 
-  }
+      // Pego o valor do elemento que disparou o evento
+      let quantidade = event.target.value;
+
+      // A partir do elemento que disparou a evento, procura-se o elemento pai, onde tem a classe 'produto' e pega o conteúdo do elemento com classe 'valor'
+      let valor = event.target.closest('.produto').querySelector('.valor').textContent; 
+
+      totalItem = textToFloat(quantidade) * textToFloat(valor);
+
+      // desenvolver demais cálculos
+      totalPedido = totalPedido + totalItem;
+      
+      escreveValorTotal(totalPedido);
+    });
+  });
 }
 
-
 function escreveValorTotal(total) {
-  // TODO
+  // Acesso o elemento através do id
+  let valorTotal = document.getElementById('valor-total');
+  // Mando escrever o resultado no elemento
+  valorTotal.innerHTML = 'R$' + total;
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
   console.log("DOM carregado");
+  calculaPrecoTotal();
 });
 
 
