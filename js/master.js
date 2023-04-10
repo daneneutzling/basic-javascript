@@ -19,9 +19,13 @@ function floatToText(float) {
 let totalPedido = 0;
 
 
-function calculaPrecoTotal() {
+function calculaPrecoTotal(precoItem) {
   let totalItem;
-  let totalPedido = 0;
+  
+  let parPrecoItem = parseFloat(precoItem);
+  
+  let totalPedido = parPrecoItem;
+  
 
   // Cria uma lista com todos elementos que tem a classe 'quantidade'
   let listaQuantidades = document.querySelectorAll('.quantidade input');
@@ -73,10 +77,13 @@ function calculaPrecoTotal() {
 }
 
 function escreveValorTotal(total) {
-  // Acesso o elemento através do id
   let valorTotal = document.getElementById('valor-total');
-  // Mando escrever o resultado no elemento
-  valorTotal.innerHTML = 'R$' + total;
+
+  if (total === undefined) {
+    valorTotal.innerHTML = 'R$ ' + 0;
+  } else {
+    valorTotal.innerHTML = 'R$ ' + total;
+  }
 }
 
 function limparCarrinho() {
@@ -93,11 +100,33 @@ function limparCarrinho() {
 
 }
 
+function novoItemECancelar() {
+  if (document.getElementById('novoProduto').style.display == 'none') {
+    document.getElementById('novoProduto').style.display = 'block';
+    document.getElementById('novoItem').style.display    = 'none';
+  } else {
+    document.getElementById('novoProduto').style.display = 'none';
+    document.getElementById('novoItem').style.display    = 'block';
+  }
+}
+
+function excluirItem() {
+  document.getElementById('produtoNovoItem').value = '';
+  document.getElementById('precoNovoItem').value   = 0;
+
+  calculaPrecoTotal(0);
+}
+
+function adicionarItem() {
+  let precoItem = document.getElementById('precoNovoItem').value;
+
+  calculaPrecoTotal(precoItem);
+}
+
 // 'DOMContentLoaded' é um evento disparado quando o HTML é totalmente carregado
 document.addEventListener("DOMContentLoaded", function (event) {
   // Chamo a função assim que o HTML for carregado
   calculaPrecoTotal();
+  escreveValorTotal();
+  novoItemECancelar();
 });
-
-
-

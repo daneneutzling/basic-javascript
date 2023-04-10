@@ -7,8 +7,8 @@
     , initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="./style/style.css">
     <title>Carrinho de Compras</title>
@@ -22,16 +22,50 @@
             </div>
             <div><i class="bi bi-cart"></i></div>
             <div class="titulo">
-                
                 <h3>Carrinho de Compras</h3>
             </div>
         </header>
         <section>
-            <article>
-                <div id="limparCarrinho">
-                    <button onclick="limparCarrinho()">Limpar Carrinho</button>
+
+            <article class="d-flex justify-content-end">
+                <div id="novoItem" class="m-1">
+                    <button class="btn btn-success bi-plus" onclick="novoItemECancelar()">Novo Item</button>
+                </div>
+                <div id="limparCarrinho" class="m-1">
+                    <button class="btn btn-warning bi-x" onclick="limparCarrinho()">Limpar Carrinho</button>
                 </div>
             </article>
+
+            <article class="mt-2" id="novoProduto">
+                <div class="border border-dark form-row">
+                    <div class="h6 col-md-7">
+                        <label>Produto</label>
+                        <input type="text" class="form-control" id="produtoNovoItem">
+                    </div>
+                    <div class="h6 col-md-2">
+                        <label>Preço</label>
+                        <input type="number" value="0" min="0" class="form-control" id="precoNovoItem">
+                    </div>
+                    <fieldset disabled>
+                        <div class="h6 col-md-4">
+                            <label>Quantidade</label>
+                            <input type="number" value="1" placeholder="1" class="form-control" id="quantidadeNovoItem">
+                        </div>
+                    </fieldset>
+                    
+                    <div id="cancelar" class="m-1">
+                        <button class="btn btn-secondary bi-arrow-left" onclick="novoItemECancelar()">Cancelar</button>
+                    </div>
+
+                    <div id="adicionarItem" class="m-1 ml-auto">
+                        <button class="btn btn-success bi-check" onclick="adicionarItem()">Adicionar</button>
+                    </div>
+                    <div id="excluirItem" class="m-1">
+                        <button class="btn btn-danger bi-trash" onclick="excluirItem()">Excluir</button>
+                    </div>
+                </div>
+            </article>
+
             <article>
                 <div class="produto" id="prod_1">
                     <div>
