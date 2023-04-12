@@ -16,59 +16,43 @@ function floatToText(float) {
   return text;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Calcula o Valor Total do Pedido 
-function calculaPrecoTotal(precoItem) {
-  let totalPedido;
+function calculaPrecoTotal() {
+  let totalPedido = 0;
 
-  if (precoItem == null || typeof precoItem == "undefined" || isNaN(precoItem) == true) {
-    totalPedido = 0;
-  } else {
-    totalPedido = parseFloat(precoItem);    
+  if (document.getElementById('novoProduto').style.display !== 'none') {
+    let itemAdicionado = adicionarItem();
+    if (itemAdicionado !== null || typeof itemAdicionado !== "undefined" || isNaN(itemAdicionado) !== true) {
+      totalPedido = itemAdicionado;
+    }
   }
 
   // Cria uma lista com todos elementos que tem a classe 'produto'
   let lista = Array.from(document.querySelectorAll('.produto'))
-
+  
   for (let i = 0; i < lista.length; i++) {   
     let quantidade = document.querySelectorAll('.quantidade input')[i];
-    let vlQuantidade = parseFloat(quantidade.value);
+    let vlQuantidade = textToFloat(quantidade.value);
 
     let preco = document.querySelectorAll('.preco span')[i];
-    let vlPreco = parseFloat(preco.textContent);
+    let vlPreco = textToFloat(preco.textContent);
 
     let presente = document.querySelectorAll('.presente input')[i];
     let vlPresente = presente.checked;
 
     if (vlPresente == true) {
-      totalPedido = vlQuantidade * vlPreco + 5;
+      totalPedido = totalPedido + (vlQuantidade * vlPreco + 5);
     } else {
-      totalPedido = vlQuantidade * vlPreco;
+      totalPedido = totalPedido + (vlQuantidade * vlPreco);
     }
-
-    console.log('Item: ' + vlPreco + '. Total: ' + totalPedido) // retorna o calculo certo (para CADA item)
-
   }
-  
   escreveValorTotal(totalPedido);
-  console.log('TOTAL: ' + totalPedido) // retorna o calculo certo (para CADA item)
-
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 // Escrever o Valor Total do Pedido
 function escreveValorTotal(total) {
-  let valor = document.getElementById('valor-total').value;
   let valorTotal = document.getElementById('valor-total');
-  
-  if (valor == null || typeof valor == "undefined" || isNaN(valor)) {
-    valorTotal.innerHTML = 'R$ ' + 0;
-  } else {
-    valorTotal.innerHTML = 'R$ ' + total;
-  }
+  valorTotal.innerHTML = floatToText(total);
 }
 
 // Limpa o Carrinho
@@ -96,15 +80,18 @@ function novoItemECancelar() {
 
 // Função para Adicionar Novo Item
 function adicionarItem() {
-
   let produto = document.getElementById('produtoNovoItem').value;
-  let preco = document.getElementById('precoNovoItem').value;
+  let preco = textToFloat(document.getElementById('precoNovoItem').value);
+  let presente = document.getElementById('presenteNovoItem').checked;
 
   if (produto == "" || preco == 0) {
     alert('Informe o Nome e o Preço do Produto.')
   } else {
-    calculaPrecoTotal(preco);
+    if (presente === true) {
+      preco = preco + 5;
+    }
   }
+  return preco;
 }
 
 // Função para Excluir Novo Item
@@ -117,7 +104,5 @@ function excluirItem() {
 // 'DOMContentLoaded' é um evento disparado quando o HTML é totalmente carregado
 document.addEventListener("DOMContentLoaded", function (event) {
   // Chamo a função assim que o HTML for carregado
-  calculaPrecoTotal();
-  escreveValorTotal();
   novoItemECancelar();
 });
